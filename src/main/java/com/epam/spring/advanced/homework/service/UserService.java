@@ -5,9 +5,6 @@ import com.epam.spring.advanced.homework.domain.User;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-/**
- * @author Yuriy_Tkach
- */
 public interface UserService extends AbstractDomainObjectService<User> {
 
     /**

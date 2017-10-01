@@ -6,9 +6,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Set;
 
-/**
- * @author Yuriy_Tkach
- */
 public interface AuditoriumService {
 
     /**

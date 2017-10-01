@@ -10,9 +10,6 @@ import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-/**
- * @author Yuriy_Tkach
- */
 public interface BookingService {
 
     /**
