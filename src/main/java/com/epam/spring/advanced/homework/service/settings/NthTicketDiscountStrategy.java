@@ -3,14 +3,12 @@ package com.epam.spring.advanced.homework.service.settings;
 import com.epam.spring.advanced.homework.domain.Event;
 import com.epam.spring.advanced.homework.domain.User;
 import com.epam.spring.advanced.homework.repository.TicketRepository;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Component
 public class NthTicketDiscountStrategy extends AbstractDiscountStrategy implements DiscountStrategy {
 
     private final int n;

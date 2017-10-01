@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Component
 public class BirthdayDiscountStrategy extends AbstractDiscountStrategy implements DiscountStrategy {
     private final int daysDeviation;
     private final float discountPercent;

@@ -19,7 +19,9 @@ public class LuckyWinnerAspect {
 
     private final UserService userService;
 
-    public LuckyWinnerAspect(UserService userService) {
+    public LuckyWinnerAspect(
+            UserService userService
+    ) {
         this.probabilityChecker = new LuckyWinnerRandomProbabilityChecker(0.8f);
         this.userService = userService;
     }

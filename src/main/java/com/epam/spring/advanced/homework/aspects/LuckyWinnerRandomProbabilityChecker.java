@@ -4,7 +4,6 @@ import java.util.Random;
 
 public class LuckyWinnerRandomProbabilityChecker implements LuckyWinnerProbabilityChecker {
 
-    // a standard random implementation should be sufficient for the homework
     private final Random random = new Random();
 
     private final float probability;
