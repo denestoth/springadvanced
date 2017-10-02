@@ -6,6 +6,7 @@ import com.epam.spring.advanced.homework.service.BookingService;
 import com.epam.spring.advanced.homework.service.EventService;
 import com.epam.spring.advanced.homework.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,9 +32,9 @@ public class GetTicketsPriceController {
     @Autowired
     EventService eventService;
 
-    @RequestMapping(value="/api/tickets", method = RequestMethod.GET)
-    public String getTickets(@RequestParam("eventId") Long eventId,
-                             @RequestParam("dateTime") LocalDateTime dateTime,
+    @RequestMapping(value="/api/tickets/price", method = RequestMethod.GET)
+    public String getTicketsPrice(@RequestParam("eventId") Long eventId,
+                             @RequestParam("dateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime,
                              @RequestParam("userId") Long userId,
                              @RequestParam("seats") List<Long> seats,
                              Model model) {
@@ -41,8 +42,10 @@ public class GetTicketsPriceController {
         User user = userService.getById(userId);
         LinkedHashSet<Long> seatsSet = new LinkedHashSet<>(seats);
 
-        bookingService.getTicketsPrice(event, dateTime, user, seatsSet);
+        double price = bookingService.getTicketsPrice(event, dateTime, user, seatsSet);
 
-        return "index";
+        model.addAttribute("price", price);
+
+        return "ticketPrice";
     }
 }

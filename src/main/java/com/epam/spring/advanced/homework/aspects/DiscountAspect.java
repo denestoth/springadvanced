@@ -32,7 +32,7 @@ public class DiscountAspect {
     private DiscountCounterRepository discountCounterRepository;
 
     @AfterReturning(
-            value = "execution(* ua.epam.spring.hometask.service.DiscountService.getDiscount(..))",
+            value = "execution(* com.epam.spring.advanced.homework.service.DiscountService.getDiscount(..))",
             returning = "returnValue")
     public void handleGetDiscount(
             JoinPoint joinPoint,

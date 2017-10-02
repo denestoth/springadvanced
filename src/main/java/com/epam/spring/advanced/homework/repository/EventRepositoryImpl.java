@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 
-@Repository
 public class EventRepositoryImpl
         extends MapBasedIdentityRepository<Event>
         implements EventRepository {

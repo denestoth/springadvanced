@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+    <bean id="auditorium1" class="com.epam.spring.advanced.homework.domain.Auditorium">
+        <property name="name" value="auditorium1"/>
+        <property name="numberOfSeats" value="20"/>
+    </bean>
+
+    <bean id="auditorium2" class="com.epam.spring.advanced.homework.domain.Auditorium">
+        <property name="name" value="auditorium2"/>
+        <property name="numberOfSeats" value="40"/>
+    </bean>
+
+    <bean id="event1" class="com.epam.spring.advanced.homework.domain.Event">
+        <property name="id" value="1"/>
+        <property name="name" value="Some Event"/>
+        <property name="basePrice" value="150"/>
+        <property name="rating" value="MID"/>
+        <property name="auditoriums">
+            <util:map map-class="java.util.TreeMap">
+                <entry value-ref="auditorium1">
+                    <key>
+                        <bean class="java.time.LocalDateTime" factory-method="of">
+                            <constructor-arg index="0" value="2018"/>
+                            <constructor-arg index="1" value="JULY"/>
+                            <constructor-arg index="2" value="15"/>
+                            <constructor-arg index="3" value="22"/>
+                            <constructor-arg index="4" value="30"/>
+                        </bean>
+                    </key>
+                </entry>
+            </util:map>
+        </property>
+    </bean>
+
+    <bean id="user1" class="com.epam.spring.advanced.homework.domain.User">
+        <property name="id" value="1"/>
+        <property name="firstName" value="First"/>
+        <property name="lastName" value="User"/>
+        <property name="email" value="first_user@foo.com"/>
+        <property name="birthday">
+            <bean class="java.time.LocalDate">
+                <constructor-arg index="0" value="1992"/>
+                <constructor-arg index="1" value="3"/>
+                <constructor-arg index="2" value="11"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="user2" class="com.epam.spring.advanced.homework.domain.User">
+        <property name="id" value="2"/>
+        <property name="firstName" value="Second"/>
+        <property name="lastName" value="User"/>
+        <property name="email" value="second_user@foo.com"/>
+        <property name="birthday">
+            <bean class="java.time.LocalDate">
+                <constructor-arg index="0" value="1982"/>
+                <constructor-arg index="1" value="8"/>
+                <constructor-arg index="2" value="7"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="auditoriumRepository" class="com.epam.spring.advanced.homework.repository.AuditoriumRepositoryImpl">
+        <constructor-arg>
+            <util:list list-class="java.util.ArrayList"
+                       value-type="com.epam.spring.advanced.homework.domain.Auditorium">
+                <ref bean="auditorium1"/>
+                <ref bean="auditorium2"/>
+            </util:list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="eventRepository" class="com.epam.spring.advanced.homework.repository.EventRepositoryImpl">
+        <constructor-arg>
+            <util:list list-class="java.util.ArrayList" value-type="com.epam.spring.advanced.homework.domain.Event">
+                <ref bean="event1"/>
+            </util:list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="useRepository" class="com.epam.spring.advanced.homework.repository.UserRepositoryImpl">
+        <constructor-arg>
+            <util:list list-class="java.util.ArrayList" value-type="com.epam.spring.advanced.homework.domain.User">
+                <ref bean="user1"/>
+                <ref bean="user2"/>
+            </util:list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="ticketRepository" class="com.epam.spring.advanced.homework.repository.TicketRepositoryImpl">
+        <constructor-arg>
+            <util:list list-class="java.util.ArrayList" value-type="com.epam.spring.advanced.homework.domain.Ticket">
+                <bean class="com.epam.spring.advanced.homework.domain.Ticket">
+                    <constructor-arg index="0" ref="user1"/>
+                    <constructor-arg index="1" ref="event1"/>
+                    <constructor-arg index="2">
+                        <bean class="java.time.LocalDateTime" factory-method="of">
+                            <constructor-arg index="0" value="2018"/>
+                            <constructor-arg index="1" value="JULY"/>
+                            <constructor-arg index="2" value="15"/>
+                            <constructor-arg index="3" value="22"/>
+                            <constructor-arg index="4" value="30"/>
+                        </bean>
+                    </constructor-arg>
+                    <constructor-arg index="3" value="1"/>
+                </bean>
+                <bean class="com.epam.spring.advanced.homework.domain.Ticket">
+                    <constructor-arg index="0">
+                        <null/>
+                    </constructor-arg>
+                    <constructor-arg index="1" ref="event1"/>
+                    <constructor-arg index="2">
+                        <bean class="java.time.LocalDateTime" factory-method="of">
+                            <constructor-arg index="0" value="2018"/>
+                            <constructor-arg index="1" value="JULY"/>
+                            <constructor-arg index="2" value="15"/>
+                            <constructor-arg index="3" value="22"/>
+                            <constructor-arg index="4" value="30"/>
+                        </bean>
+                    </constructor-arg>
+                    <constructor-arg index="3" value="2"/>
+                </bean>
+            </util:list>
+        </constructor-arg>
+    </bean>
+
+</beans>

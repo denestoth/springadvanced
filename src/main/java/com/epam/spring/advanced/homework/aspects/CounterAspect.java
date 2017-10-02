@@ -25,7 +25,7 @@ public class CounterAspect {
     private final ConcurrentHashMap<Event, Integer> booked = new ConcurrentHashMap<>();
     private EventCounterRepository eventCounterRepository;
 
-    @AfterReturning("execution(* ua.epam.spring.hometask.service.BookingService.bookTickets(..))")
+    @AfterReturning("execution(* com.epam.spring.advanced.homework.service.BookingService.bookTickets(..))")
     public void handleBookTickets(JoinPoint joinPoint) {
         Collection<Ticket> tickets = (Collection<Ticket>) joinPoint.getArgs()[0];
         for (Ticket ticket : tickets) {
@@ -33,7 +33,7 @@ public class CounterAspect {
         }
     }
 
-    @Before("execution(* ua.epam.spring.hometask.service.BookingService.getTicketsPrice(..))")
+    @Before("execution(* com.epam.spring.advanced.homework.service.BookingService.getTicketsPrice(..))")
     public void handleGetTicketsPrice(JoinPoint joinPoint) {
         Event event = (Event)joinPoint.getArgs()[0];
         incrementCounterForEvent(event, pricesQueried);

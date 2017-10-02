@@ -8,9 +8,6 @@ public class Event extends DomainObject {
 
     private String name;
 
-    // Why do we need a separate field for air dates? We already have auditoriums!
-    private NavigableSet<LocalDateTime> airDates = new TreeSet<>();
-
     private double basePrice;
 
     private EventRating rating;
@@ -29,12 +26,7 @@ public class Event extends DomainObject {
      *         not aired on that date
      */
     public boolean assignAuditorium(LocalDateTime dateTime, Auditorium auditorium) {
-        if (airDates.contains(dateTime)) {
-            auditoriums.put(dateTime, auditorium);
-            return true;
-        } else {
-            return false;
-        }
+        return auditoriums.put(dateTime, auditorium) != null;
     }
 
     /**
@@ -58,7 +50,7 @@ public class Event extends DomainObject {
      *         there
      */
     public boolean addAirDateTime(LocalDateTime dateTime) {
-        return airDates.add(dateTime);
+        return auditoriums.put(dateTime, new Auditorium()) != null;
     }
 
     /**
@@ -72,11 +64,7 @@ public class Event extends DomainObject {
      *         there
      */
     public boolean addAirDateTime(LocalDateTime dateTime, Auditorium auditorium) {
-        boolean result = airDates.add(dateTime);
-        if (result) {
-            auditoriums.put(dateTime, auditorium);
-        }
-        return result;
+        return auditoriums.put(dateTime, auditorium) != null;
     }
 
     /**
@@ -88,11 +76,7 @@ public class Event extends DomainObject {
      * @return <code>true</code> if successful, <code>false</code> if not there
      */
     public boolean removeAirDateTime(LocalDateTime dateTime) {
-        boolean result = airDates.remove(dateTime);
-        if (result) {
-            auditoriums.remove(dateTime);
-        }
-        return result;
+        return auditoriums.remove(dateTime) != null;
     }
 
     /**
@@ -103,7 +87,7 @@ public class Event extends DomainObject {
      * @return <code>true</code> event airs on that date and time
      */
     public boolean airsOnDateTime(LocalDateTime dateTime) {
-        return airDates.stream().anyMatch(dt -> dt.equals(dateTime));
+        return getAirDates().stream().anyMatch(dt -> dt.equals(dateTime));
     }
 
     /**
@@ -114,7 +98,7 @@ public class Event extends DomainObject {
      * @return <code>true</code> event airs on that date
      */
     public boolean airsOnDate(LocalDate date) {
-        return airDates.stream().anyMatch(dt -> dt.toLocalDate().equals(date));
+        return getAirDates().stream().anyMatch(dt -> dt.toLocalDate().equals(date));
     }
 
     /**
@@ -128,8 +112,7 @@ public class Event extends DomainObject {
      * @return <code>true</code> event airs on dates
      */
     public boolean airsOnDates(LocalDate from, LocalDate to) {
-        return airDates.stream()
-                .anyMatch(dt -> dt.toLocalDate().compareTo(from) >= 0 && dt.toLocalDate().compareTo(to) <= 0);
+        return getAirDates().stream().anyMatch(dt -> dt.toLocalDate().compareTo(from) >= 0 && dt.toLocalDate().compareTo(to) <= 0);
     }
 
     public String getName() {
@@ -141,11 +124,7 @@ public class Event extends DomainObject {
     }
 
     public NavigableSet<LocalDateTime> getAirDates() {
-        return airDates;
-    }
-
-    public void setAirDates(NavigableSet<LocalDateTime> airDates) {
-        this.airDates = airDates;
+        return new TreeSet<>(auditoriums.keySet());
     }
 
     public double getBasePrice() {

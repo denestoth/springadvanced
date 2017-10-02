@@ -7,6 +7,7 @@ import com.epam.spring.advanced.homework.service.UserService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -19,14 +20,13 @@ public class LuckyWinnerAspect {
 
     private final UserService userService;
 
-    public LuckyWinnerAspect(
-            UserService userService
-    ) {
+    @Autowired
+    public LuckyWinnerAspect(UserService userService) {
         this.probabilityChecker = new LuckyWinnerRandomProbabilityChecker(0.8f);
         this.userService = userService;
     }
 
-    @Around("execution(* ua.epam.spring.hometask.service.BookingService.getTicketsPrice(..))")
+    @Around("execution(* com.epam.spring.advanced.homework.service.BookingService.getTicketsPrice(..))")
     public Object handleGetPurchasingPrice(ProceedingJoinPoint joinPoint) throws Throwable {
         Object[] args = joinPoint.getArgs();
         User user = (User) args[2];

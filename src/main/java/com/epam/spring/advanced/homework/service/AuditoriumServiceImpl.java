@@ -2,6 +2,7 @@ package com.epam.spring.advanced.homework.service;
 
 import com.epam.spring.advanced.homework.domain.Auditorium;
 import com.epam.spring.advanced.homework.repository.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
@@ -14,8 +15,9 @@ public class AuditoriumServiceImpl implements AuditoriumService {
 
     private final Repository<Auditorium, String> repository;
 
-    public AuditoriumServiceImpl(Repository<Auditorium, String> repository) {
-        this.repository = repository;
+    @Autowired
+    public AuditoriumServiceImpl(Repository<Auditorium, String> auditoriumRepository) {
+        this.repository = auditoriumRepository;
     }
 
     @Nonnull

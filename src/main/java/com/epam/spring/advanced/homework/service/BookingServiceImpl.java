@@ -78,28 +78,27 @@ public class BookingServiceImpl implements BookingService {
             throw new IllegalArgumentException(String.format("Incorrect tickets: %s", incorrectTickets));
         }
 
-        // Sure it wouldn't be that simple in a real-world application,
-        // but for the purpose of correctness of a sample app a simple lock should suffice.
         synchronized (bookingLocker) {
             Set<Ticket> alreadyBookedTickets = ticketRepository
                     .find(t -> tickets.stream()
                             .anyMatch(ticket -> Objects.equals(t.getEvent(), ticket.getEvent()) &&
                                     Objects.equals(t.getSeat(), ticket.getSeat()) &&
-                                    Objects.equals(t.getDateTime(), ticket.getDateTime())));
+                                    Objects.equals(t.getDateTime(), ticket.getDateTime()) &&
+                                    t.getUser() != null));
 
             if (!alreadyBookedTickets.isEmpty()) {
                 throw new RuntimeException(String.format("Tickets already booked: %s", alreadyBookedTickets));
             }
 
             for (Ticket ticket : tickets) {
-                User user = ticket.getUser();
+                User user = userRepository.getAll().stream().collect(Collectors.toList()).get(0);
                 if (user != null) {
                     user.getTickets().add(ticket);
                     if (user.getId() != null) {
                         userRepository.update(user);
                     }
+                    ticket.setUser(user);
                 }
-                ticketRepository.add(ticket);
             }
         }
     }
@@ -107,7 +106,7 @@ public class BookingServiceImpl implements BookingService {
     @Nonnull
     @Override
     public Set<Ticket> getPurchasedTicketsForEvent(@Nonnull Event event, @Nonnull LocalDateTime dateTime) {
-        return ticketRepository.find(t -> event.equals(t.getEvent()) && dateTime.equals(t.getDateTime()));
+        return ticketRepository.find(t -> event.equals(t.getEvent()) && dateTime.equals(t.getDateTime()) && t.getUser() != null);
     }
 
 }

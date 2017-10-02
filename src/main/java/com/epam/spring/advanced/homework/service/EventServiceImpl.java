@@ -18,8 +18,9 @@ public class EventServiceImpl extends RepositoryBasedDomainObjectService<Event> 
 
     private Clock clock = Clock.systemUTC();
 
-    public EventServiceImpl(EventRepository repository) {
-        super(repository);
+    @Autowired
+    public EventServiceImpl(EventRepository eventRepository) {
+        super(eventRepository);
     }
 
     @Nullable
