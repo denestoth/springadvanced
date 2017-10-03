@@ -11,7 +11,6 @@ public class MainController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model) {
-        model.addAttribute("someAttribute","someValue");
         return "index";
     }
 }

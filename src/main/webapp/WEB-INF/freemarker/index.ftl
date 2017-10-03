@@ -2,19 +2,22 @@
 <html>
     <body>
         <p>
-            ${someAttribute}
+            <a href="/denes-toth/api/tickets/price?eventId=1000&dateTime=2018-07-15T22:30Z&userId=201&seats=1">Get price of tickets</a>
         </p>
         <p>
-            <a href="./api/tickets/price?eventId=1&dateTime=2018-07-15T22:30Z&userId=1&seats=1">Get price of tickets</a>
+            <a href="/denes-toth/api/tickets/book?ticketId=1">Book tickets</a>
         </p>
         <p>
-            <a href="./api/tickets/book?ticketId=1">Book tickets</a>
+            <a href="/denes-toth/api/tickets/purchased?eventId=1000&dateTime=2018-07-15T22:30Z">see sold tickets</a>
         </p>
         <p>
-            <a href="./api/tickets/purchased?eventId=1&dateTime=2018-07-15T22:30Z">see sold tickets</a>
+            <a href="/denes-toth/api/tickets/purchasedPdf?eventId=1000&dateTime=2018-07-15T22:30Z">see sold tickets as PDF</a>
         </p>
         <p>
-            <a href="./api/tickets/purchasedPdf?eventId=1&dateTime=2018-07-15T22:30Z">see sold tickets</a>
+            <a href="/denes-toth/api/user/upload">Upload users</a>
+        </p>
+        <p>
+            <a href="/denes-toth/api/event/upload">Upload events</a>
         </p>
     </body>
 </html>

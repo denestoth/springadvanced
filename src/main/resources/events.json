@@ -1,0 +1,17 @@
+[
+	{
+		"name": "event1",
+		"basePrice": "50",
+		"rating": "HIGH"
+	},
+	{
+		"name": "event2",
+		"basePrice": "150",
+		"rating": "MID"
+	},
+	{
+		"name": "event3",
+		"basePrice": "250",
+		"rating": "LOW"
+	}
+]

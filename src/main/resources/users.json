@@ -1,0 +1,26 @@
+[
+	{
+		"firstName": "first",
+		"lastName": "ln",
+		"email": "1st@ma.il",
+		"birthday": "1999-12-01"
+	},
+	{
+		"firstName": "second",
+		"lastName": "ln",
+		"email": "2nd@ma.il",
+		"birthday": "2000-12-01"
+	},
+	{
+		"firstName": "third",
+		"lastName": "ln",
+		"email": "3rd@ma.il",
+		"birthday": "2001-12-01"
+	},
+	{
+		"firstName": "fourth",
+		"lastName": "ln",
+		"email": "4th@ma.il",
+		"birthday": "2002-12-01"
+	}
+]

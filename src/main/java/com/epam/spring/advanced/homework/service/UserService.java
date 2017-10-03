@@ -17,4 +17,6 @@ public interface UserService extends AbstractDomainObjectService<User> {
     public @Nullable
     User getUserByEmail(@Nonnull String email);
 
+    void addUser(@Nonnull User user);
+
 }

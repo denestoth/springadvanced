@@ -1,12 +1,19 @@
 package com.epam.spring.advanced.homework.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
 public class User extends DomainObject {
 
+    @JsonIgnore
     private final Set<UserLuckyEventInfo> luckyEvents = new HashSet<>();
     private final Object luckyEventsLocker = new Object();
 
@@ -17,8 +24,10 @@ public class User extends DomainObject {
     private String email;
 
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate birthday;
 
+    @JsonIgnore
     private NavigableSet<Ticket> tickets = new TreeSet<>();
 
     public final Set<UserLuckyEventInfo> getLuckyEvents() {
@@ -124,5 +133,4 @@ public class User extends DomainObject {
         }
         return true;
     }
-
 }

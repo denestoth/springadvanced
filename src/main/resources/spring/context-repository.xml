@@ -16,7 +16,7 @@
     </bean>
 
     <bean id="event1" class="com.epam.spring.advanced.homework.domain.Event">
-        <property name="id" value="1"/>
+        <property name="id" value="1000"/>
         <property name="name" value="Some Event"/>
         <property name="basePrice" value="150"/>
         <property name="rating" value="MID"/>
@@ -38,7 +38,7 @@
     </bean>
 
     <bean id="user1" class="com.epam.spring.advanced.homework.domain.User">
-        <property name="id" value="1"/>
+        <property name="id" value="201"/>
         <property name="firstName" value="First"/>
         <property name="lastName" value="User"/>
         <property name="email" value="first_user@foo.com"/>
@@ -52,7 +52,7 @@
     </bean>
 
     <bean id="user2" class="com.epam.spring.advanced.homework.domain.User">
-        <property name="id" value="2"/>
+        <property name="id" value="202"/>
         <property name="firstName" value="Second"/>
         <property name="lastName" value="User"/>
         <property name="email" value="second_user@foo.com"/>

@@ -51,6 +51,11 @@ public class EventServiceImpl extends RepositoryBasedDomainObjectService<Event> 
                 .isEmpty());
     }
 
+    @Override
+    public void addEvent(@Nonnull Event event) {
+        repository.add(event);
+    }
+
     public Clock getClock() {
         return clock;
     }

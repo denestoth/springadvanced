@@ -1,5 +1,8 @@
 package com.epam.spring.advanced.homework.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -10,8 +13,10 @@ public class Event extends DomainObject {
 
     private double basePrice;
 
+    @JsonDeserialize(using = EventRatingDeserializer.class)
     private EventRating rating;
 
+    @JsonIgnore
     private NavigableMap<LocalDateTime, Auditorium> auditoriums = new TreeMap<>();
 
     /**

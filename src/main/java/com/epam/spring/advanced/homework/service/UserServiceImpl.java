@@ -21,4 +21,9 @@ public class UserServiceImpl extends RepositoryBasedDomainObjectService<User> im
     public User getUserByEmail(@Nonnull String email) {
         return repository.findSingleOrDefault(u -> email.equalsIgnoreCase(u.getEmail()));
     }
+
+    @Override
+    public void addUser(@Nonnull User user) {
+        repository.add(user);
+    }
 }
