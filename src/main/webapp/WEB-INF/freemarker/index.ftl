@@ -19,5 +19,8 @@
         <p>
             <a href="/denes-toth/api/event/upload">Upload events</a>
         </p>
+        <p>
+            <a href="/denes-toth/logout">Logout</a>
+        </p>
     </body>
 </html>

@@ -50,7 +50,7 @@
                 <constructor-arg index="2" value="11"/>
             </bean>
         </property>
-        <property name="password" value="$2a$11$hhaALaiz4I1HRfyqA8RVeuFUA2RntU.1IU7KM7wdWIx8xeL3UaOYK" />
+        <property name="password" value="5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8" />
         <property name="roles" value="ROLE_REGISTERED_USER" />
     </bean>
 
@@ -66,8 +66,8 @@
                 <constructor-arg index="2" value="7"/>
             </bean>
         </property>
-        <property name="password" value="$2a$11$hhaALaiz4I1HRfyqA8RVeuFUA2RntU.1IU7KM7wdWIx8xeL3UaOYK" />
-        <property name="roles" value="ROLE_BOOKING_MANAGER" />
+        <property name="password" value="5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8" />
+        <property name="roles" value="ROLE_REGISTERED_USER,ROLE_BOOKING_MANAGER" />
     </bean>
 
     <bean id="auditoriumRepository" class="com.epam.spring.advanced.homework.repository.AuditoriumRepositoryImpl">

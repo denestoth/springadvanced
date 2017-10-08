@@ -26,7 +26,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@RequestParam("email") String email,
+    public String doLogin(@RequestParam("email") String email,
                         @RequestParam("password") String password,
                         Model model) {
         return "index";

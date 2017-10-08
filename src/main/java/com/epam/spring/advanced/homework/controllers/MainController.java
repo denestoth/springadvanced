@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/")
 public class MainController {
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping
     public String index(Model model) {
-        return "redirect:/";
+        return "index";
     }
 }

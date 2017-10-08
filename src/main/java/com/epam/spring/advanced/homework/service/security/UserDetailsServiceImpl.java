@@ -13,7 +13,7 @@ import java.nio.file.attribute.UserPrincipal;
 /**
  * @author Denes Toth
  */
-@Service("UserDetailsServiceImpl")
+@Service("userDetailsServiceImpl")
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserService userService;

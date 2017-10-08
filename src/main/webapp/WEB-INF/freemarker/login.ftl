@@ -10,15 +10,15 @@
     <body>
         <form class="form-horizontal" login-page="/denes-toth/login" method="POST">
             <div class="form-group">
-                <label class="col-md-4 control-label" for="emailInput">E-mail:</label>
+                <label class="col-md-4 control-label" for="email">E-mail:</label>
                 <div class="col-md-8">
-                    <input id="emailInput" type="text" name="email" />
+                    <input id="email" type="text" name="email" />
                  </div>
             </div>
             <div class="form-group">
-                <label class="col-md-4 control-label" for="passwordInput">Password:</label>
+                <label class="col-md-4 control-label" for="password">Password:</label>
                 <div class="col-md-8">
-                    <input id="passwordInput" type="password" name="password" />
+                    <input id="passwordI" type="password" name="password" />
                 </div>
             </div>
             <div class="form-group">
@@ -26,6 +26,17 @@
                     <input name="submit" type="submit" value="submit" />
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="rememberme">Remember:</label>
+                <div class="col-md-8">
+                    <input id="rememberme" name="rememberme" type="checkbox" />
+                </div>
+            </div>
         </form>
+        <div>
+            User: first_user@foo.com/password
+            <br />
+            Admin: second_user@foo.com/password
+        </div>
     </body>
 </html>
