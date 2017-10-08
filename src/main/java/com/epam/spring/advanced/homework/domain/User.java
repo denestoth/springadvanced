@@ -23,6 +23,10 @@ public class User extends DomainObject {
 
     private String email;
 
+    private String password;
+
+    private String roles;
+
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate birthday;
@@ -69,6 +73,22 @@ public class User extends DomainObject {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     public LocalDate getBirthday() {
         return birthday;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
     //Why the following DateFormats do not work? had to fall back to SpEL...

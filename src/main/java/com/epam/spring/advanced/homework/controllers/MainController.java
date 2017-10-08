@@ -11,6 +11,6 @@ public class MainController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String index(Model model) {
-        return "index";
+        return "redirect:/";
     }
 }

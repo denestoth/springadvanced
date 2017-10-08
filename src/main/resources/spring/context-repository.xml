@@ -2,7 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:util="http://www.springframework.org/schema/util"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 
     <bean id="auditorium1" class="com.epam.spring.advanced.homework.domain.Auditorium">
@@ -49,6 +50,8 @@
                 <constructor-arg index="2" value="11"/>
             </bean>
         </property>
+        <property name="password" value="$2a$11$hhaALaiz4I1HRfyqA8RVeuFUA2RntU.1IU7KM7wdWIx8xeL3UaOYK" />
+        <property name="roles" value="ROLE_REGISTERED_USER" />
     </bean>
 
     <bean id="user2" class="com.epam.spring.advanced.homework.domain.User">
@@ -63,6 +66,8 @@
                 <constructor-arg index="2" value="7"/>
             </bean>
         </property>
+        <property name="password" value="$2a$11$hhaALaiz4I1HRfyqA8RVeuFUA2RntU.1IU7KM7wdWIx8xeL3UaOYK" />
+        <property name="roles" value="ROLE_BOOKING_MANAGER" />
     </bean>
 
     <bean id="auditoriumRepository" class="com.epam.spring.advanced.homework.repository.AuditoriumRepositoryImpl">
