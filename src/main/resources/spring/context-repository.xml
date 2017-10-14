@@ -36,6 +36,7 @@
                 </entry>
             </util:map>
         </property>
+        <property name="ticketPrice" value="100" />
     </bean>
 
     <bean id="user1" class="com.epam.spring.advanced.homework.domain.User">
@@ -52,6 +53,11 @@
         </property>
         <property name="password" value="5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8" />
         <property name="roles" value="ROLE_REGISTERED_USER" />
+        <property name="userAccount">
+            <bean class="com.epam.spring.advanced.homework.domain.UserAccount">
+                <constructor-arg index="0" value="200" />
+            </bean>
+        </property>
     </bean>
 
     <bean id="user2" class="com.epam.spring.advanced.homework.domain.User">
@@ -68,6 +74,11 @@
         </property>
         <property name="password" value="5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8" />
         <property name="roles" value="ROLE_REGISTERED_USER,ROLE_BOOKING_MANAGER" />
+        <property name="userAccount">
+            <bean class="com.epam.spring.advanced.homework.domain.UserAccount">
+                <constructor-arg index="0" value="200" />
+            </bean>
+        </property>
     </bean>
 
     <bean id="auditoriumRepository" class="com.epam.spring.advanced.homework.repository.AuditoriumRepositoryImpl">
@@ -129,6 +140,134 @@
                         </bean>
                     </constructor-arg>
                     <constructor-arg index="3" value="2"/>
+                </bean>
+                <bean class="com.epam.spring.advanced.homework.domain.Ticket">
+                    <constructor-arg index="0">
+                        <null/>
+                    </constructor-arg>
+                    <constructor-arg index="1" ref="event1"/>
+                    <constructor-arg index="2">
+                        <bean class="java.time.LocalDateTime" factory-method="of">
+                            <constructor-arg index="0" value="2018"/>
+                            <constructor-arg index="1" value="JULY"/>
+                            <constructor-arg index="2" value="15"/>
+                            <constructor-arg index="3" value="22"/>
+                            <constructor-arg index="4" value="30"/>
+                        </bean>
+                    </constructor-arg>
+                    <constructor-arg index="3" value="3"/>
+                </bean>
+                <bean class="com.epam.spring.advanced.homework.domain.Ticket">
+                    <constructor-arg index="0">
+                        <null/>
+                    </constructor-arg>
+                    <constructor-arg index="1" ref="event1"/>
+                    <constructor-arg index="2">
+                        <bean class="java.time.LocalDateTime" factory-method="of">
+                            <constructor-arg index="0" value="2018"/>
+                            <constructor-arg index="1" value="JULY"/>
+                            <constructor-arg index="2" value="15"/>
+                            <constructor-arg index="3" value="22"/>
+                            <constructor-arg index="4" value="30"/>
+                        </bean>
+                    </constructor-arg>
+                    <constructor-arg index="3" value="4"/>
+                </bean>
+                <bean class="com.epam.spring.advanced.homework.domain.Ticket">
+                    <constructor-arg index="0">
+                        <null/>
+                    </constructor-arg>
+                    <constructor-arg index="1" ref="event1"/>
+                    <constructor-arg index="2">
+                        <bean class="java.time.LocalDateTime" factory-method="of">
+                            <constructor-arg index="0" value="2018"/>
+                            <constructor-arg index="1" value="JULY"/>
+                            <constructor-arg index="2" value="15"/>
+                            <constructor-arg index="3" value="22"/>
+                            <constructor-arg index="4" value="30"/>
+                        </bean>
+                    </constructor-arg>
+                    <constructor-arg index="3" value="5"/>
+                </bean>
+                <bean class="com.epam.spring.advanced.homework.domain.Ticket">
+                    <constructor-arg index="0">
+                        <null/>
+                    </constructor-arg>
+                    <constructor-arg index="1" ref="event1"/>
+                    <constructor-arg index="2">
+                        <bean class="java.time.LocalDateTime" factory-method="of">
+                            <constructor-arg index="0" value="2018"/>
+                            <constructor-arg index="1" value="JULY"/>
+                            <constructor-arg index="2" value="15"/>
+                            <constructor-arg index="3" value="22"/>
+                            <constructor-arg index="4" value="30"/>
+                        </bean>
+                    </constructor-arg>
+                    <constructor-arg index="3" value="6"/>
+                </bean>
+                <bean class="com.epam.spring.advanced.homework.domain.Ticket">
+                    <constructor-arg index="0">
+                        <null/>
+                    </constructor-arg>
+                    <constructor-arg index="1" ref="event1"/>
+                    <constructor-arg index="2">
+                        <bean class="java.time.LocalDateTime" factory-method="of">
+                            <constructor-arg index="0" value="2018"/>
+                            <constructor-arg index="1" value="JULY"/>
+                            <constructor-arg index="2" value="15"/>
+                            <constructor-arg index="3" value="22"/>
+                            <constructor-arg index="4" value="30"/>
+                        </bean>
+                    </constructor-arg>
+                    <constructor-arg index="3" value="7"/>
+                </bean>
+                <bean class="com.epam.spring.advanced.homework.domain.Ticket">
+                    <constructor-arg index="0">
+                        <null/>
+                    </constructor-arg>
+                    <constructor-arg index="1" ref="event1"/>
+                    <constructor-arg index="2">
+                        <bean class="java.time.LocalDateTime" factory-method="of">
+                            <constructor-arg index="0" value="2018"/>
+                            <constructor-arg index="1" value="JULY"/>
+                            <constructor-arg index="2" value="15"/>
+                            <constructor-arg index="3" value="22"/>
+                            <constructor-arg index="4" value="30"/>
+                        </bean>
+                    </constructor-arg>
+                    <constructor-arg index="3" value="8"/>
+                </bean>
+                <bean class="com.epam.spring.advanced.homework.domain.Ticket">
+                    <constructor-arg index="0">
+                        <null/>
+                    </constructor-arg>
+                    <constructor-arg index="1" ref="event1"/>
+                    <constructor-arg index="2">
+                        <bean class="java.time.LocalDateTime" factory-method="of">
+                            <constructor-arg index="0" value="2018"/>
+                            <constructor-arg index="1" value="JULY"/>
+                            <constructor-arg index="2" value="15"/>
+                            <constructor-arg index="3" value="22"/>
+                            <constructor-arg index="4" value="30"/>
+                        </bean>
+                    </constructor-arg>
+                    <constructor-arg index="3" value="9"/>
+                </bean>
+                <bean class="com.epam.spring.advanced.homework.domain.Ticket">
+                    <constructor-arg index="0">
+                        <null/>
+                    </constructor-arg>
+                    <constructor-arg index="1" ref="event1"/>
+                    <constructor-arg index="2">
+                        <bean class="java.time.LocalDateTime" factory-method="of">
+                            <constructor-arg index="0" value="2018"/>
+                            <constructor-arg index="1" value="JULY"/>
+                            <constructor-arg index="2" value="15"/>
+                            <constructor-arg index="3" value="22"/>
+                            <constructor-arg index="4" value="30"/>
+                        </bean>
+                    </constructor-arg>
+                    <constructor-arg index="3" value="10"/>
                 </bean>
             </util:list>
         </constructor-arg>

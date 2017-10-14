@@ -1,13 +1,9 @@
 package com.epam.spring.advanced.homework.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -26,6 +22,9 @@ public class User extends DomainObject {
     private String password;
 
     private String roles;
+
+    @JsonIgnore
+    private UserAccount userAccount;
 
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -75,6 +74,13 @@ public class User extends DomainObject {
         return birthday;
     }
 
+    //Why the following DateFormats do not work? had to fall back to SpEL...
+    //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    //@DateTimeFormat(pattern = "yyyy-MM-dd")
+    public void setBirthday(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -91,11 +97,12 @@ public class User extends DomainObject {
         this.roles = roles;
     }
 
-    //Why the following DateFormats do not work? had to fall back to SpEL...
-    //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    //@DateTimeFormat(pattern = "yyyy-MM-dd")
-    public void setBirthday(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate birthday) {
-        this.birthday = birthday;
+    public UserAccount getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(UserAccount userAccount) {
+        this.userAccount = userAccount;
     }
 
     public NavigableSet<Ticket> getTickets() {

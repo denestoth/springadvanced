@@ -19,6 +19,9 @@ public class Event extends DomainObject {
     @JsonIgnore
     private NavigableMap<LocalDateTime, Auditorium> auditoriums = new TreeMap<>();
 
+    @JsonIgnore
+    private long ticketPrice;
+
     /**
      * Checks if event is aired on particular <code>dateTime</code> and assigns
      * auditorium to it.
@@ -154,6 +157,14 @@ public class Event extends DomainObject {
 
     public void setAuditoriums(NavigableMap<LocalDateTime, Auditorium> auditoriums) {
         this.auditoriums = auditoriums;
+    }
+
+    public long getTicketPrice() {
+        return ticketPrice;
+    }
+
+    public void setTicketPrice(long ticketPrice) {
+        this.ticketPrice = ticketPrice;
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.epam.spring.advanced.homework.service;
 import com.epam.spring.advanced.homework.domain.*;
 import com.epam.spring.advanced.homework.repository.TicketRepository;
 import com.epam.spring.advanced.homework.repository.UserRepository;
+import com.epam.spring.advanced.homework.service.security.AuthenticationFacade;
 import com.epam.spring.advanced.homework.service.settings.BookingSettings;
 import org.springframework.stereotype.Service;
 import javax.annotation.Nonnull;
@@ -18,20 +19,23 @@ import java.util.stream.Collectors;
 public class BookingServiceImpl implements BookingService {
     private final BookingSettings bookingSettings;
     private final TicketRepository ticketRepository;
-    private final UserRepository userRepository;
     private final DiscountService discountService;
+    private final AuthenticationFacade authenticationFacade;
+    private final UserService userService;
     private final Object bookingLocker = new Object();
 
     public BookingServiceImpl(
             BookingSettings bookingSettings,
             TicketRepository ticketRepository,
-            UserRepository userRepository,
-            DiscountService discountService
+            UserService userService,
+            DiscountService discountService,
+            AuthenticationFacade authenticationFacade
     ) {
         this.bookingSettings = bookingSettings;
         this.ticketRepository = ticketRepository;
-        this.userRepository = userRepository;
         this.discountService = discountService;
+        this.authenticationFacade = authenticationFacade;
+        this.userService = userService;
     }
 
     @Override
@@ -78,6 +82,14 @@ public class BookingServiceImpl implements BookingService {
             throw new IllegalArgumentException(String.format("Incorrect tickets: %s", incorrectTickets));
         }
 
+        Long sumPrice = 0L;
+
+        for (Ticket ticket: tickets) {
+            sumPrice += ticket.getEvent().getTicketPrice();
+        }
+
+        userService.getUserByEmail(authenticationFacade.getAuthentication().getName()).getUserAccount().substractMoney(sumPrice);
+
         synchronized (bookingLocker) {
             Set<Ticket> alreadyBookedTickets = ticketRepository
                     .find(t -> tickets.stream()
@@ -91,11 +103,11 @@ public class BookingServiceImpl implements BookingService {
             }
 
             for (Ticket ticket : tickets) {
-                User user = userRepository.getAll().stream().collect(Collectors.toList()).get(0);
+                User user = userService.getAll().stream().collect(Collectors.toList()).get(0);
                 if (user != null) {
                     user.getTickets().add(ticket);
                     if (user.getId() != null) {
-                        userRepository.update(user);
+                        userService.update(user);
                     }
                     ticket.setUser(user);
                 }

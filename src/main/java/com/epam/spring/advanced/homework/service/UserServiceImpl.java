@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Collection;
 
 @Service
 public class UserServiceImpl extends RepositoryBasedDomainObjectService<User> implements UserService {
@@ -25,5 +26,13 @@ public class UserServiceImpl extends RepositoryBasedDomainObjectService<User> im
     @Override
     public void addUser(@Nonnull User user) {
         repository.add(user);
+    }
+
+    public Collection<User> getAll() {
+        return repository.getAll();
+    }
+
+    public void update(User user) {
+        repository.update(user);
     }
 }

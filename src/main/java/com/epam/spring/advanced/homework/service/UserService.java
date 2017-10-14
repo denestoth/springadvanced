@@ -4,6 +4,7 @@ import com.epam.spring.advanced.homework.domain.User;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Collection;
 
 public interface UserService extends AbstractDomainObjectService<User> {
 
@@ -19,4 +20,7 @@ public interface UserService extends AbstractDomainObjectService<User> {
 
     void addUser(@Nonnull User user);
 
+    public Collection<User> getAll();
+
+    public void update(User user);
 }
