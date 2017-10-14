@@ -32,12 +32,12 @@ public class GetTicketsPriceController {
     @Autowired
     EventService eventService;
 
-    @RequestMapping(value="/api/tickets/price", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/tickets/price", method = RequestMethod.GET)
     public String getTicketsPrice(@RequestParam("eventId") Long eventId,
-                             @RequestParam("dateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime,
-                             @RequestParam("userId") Long userId,
-                             @RequestParam("seats") List<Long> seats,
-                             Model model) {
+                                  @RequestParam("dateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime,
+                                  @RequestParam("userId") Long userId,
+                                  @RequestParam("seats") List<Long> seats,
+                                  Model model) {
         Event event = eventService.getById(eventId);
         User user = userService.getById(userId);
         LinkedHashSet<Long> seatsSet = new LinkedHashSet<>(seats);

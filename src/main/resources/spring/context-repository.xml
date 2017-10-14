@@ -36,7 +36,7 @@
                 </entry>
             </util:map>
         </property>
-        <property name="ticketPrice" value="100" />
+        <property name="ticketPrice" value="100"/>
     </bean>
 
     <bean id="user1" class="com.epam.spring.advanced.homework.domain.User">
@@ -51,11 +51,11 @@
                 <constructor-arg index="2" value="11"/>
             </bean>
         </property>
-        <property name="password" value="5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8" />
-        <property name="roles" value="ROLE_REGISTERED_USER" />
+        <property name="password" value="5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"/>
+        <property name="roles" value="ROLE_REGISTERED_USER"/>
         <property name="userAccount">
             <bean class="com.epam.spring.advanced.homework.domain.UserAccount">
-                <constructor-arg index="0" value="200" />
+                <constructor-arg index="0" value="200"/>
             </bean>
         </property>
     </bean>
@@ -72,11 +72,11 @@
                 <constructor-arg index="2" value="7"/>
             </bean>
         </property>
-        <property name="password" value="5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8" />
-        <property name="roles" value="ROLE_REGISTERED_USER,ROLE_BOOKING_MANAGER" />
+        <property name="password" value="5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"/>
+        <property name="roles" value="ROLE_REGISTERED_USER,ROLE_BOOKING_MANAGER"/>
         <property name="userAccount">
             <bean class="com.epam.spring.advanced.homework.domain.UserAccount">
-                <constructor-arg index="0" value="200" />
+                <constructor-arg index="0" value="200"/>
             </bean>
         </property>
     </bean>

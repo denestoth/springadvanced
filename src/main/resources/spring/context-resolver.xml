@@ -17,7 +17,7 @@
     </bean>
 
     <bean class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
-        <property name="basename" value="views" />
+        <property name="basename" value="views"/>
     </bean>
 
     <bean class="org.springframework.web.servlet.view.XmlViewResolver"/>

@@ -51,7 +51,7 @@ public class DiscountServiceImpl implements DiscountService {
             Optional<ApplicableDiscountInfo> maxDiscount = discountStrategies.stream()
                     .map(strategy -> new ApplicableDiscountInfo(strategy,
                             strategy.getDiscount(user, event, airDateTime,
-                            seats.size(), seatNaturalOrderNumber.get())))
+                                    seats.size(), seatNaturalOrderNumber.get())))
                     .max((i1, i2) -> Float.compare(i1.getDiscountPercent(), i2.getDiscountPercent()));
 
             if (maxDiscount.isPresent() && maxDiscount.get().getDiscountPercent() > 0.0f) {

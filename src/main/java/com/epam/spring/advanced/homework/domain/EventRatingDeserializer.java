@@ -9,9 +9,9 @@ import java.io.IOException;
 /**
  * @author Denes_Toth
  */
-public class EventRatingDeserializer  extends JsonDeserializer<EventRating> {
+public class EventRatingDeserializer extends JsonDeserializer<EventRating> {
     @Override
-    public EventRating deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException{
+    public EventRating deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         return EventRating.valueOf(jsonParser.getText().toUpperCase());
     }
 }

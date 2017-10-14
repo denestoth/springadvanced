@@ -10,7 +10,7 @@ public interface AuditoriumService {
 
     /**
      * Getting all auditoriums from the system
-     * 
+     *
      * @return set of all auditoriums
      */
     public @Nonnull
@@ -18,9 +18,8 @@ public interface AuditoriumService {
 
     /**
      * Finding auditorium by name
-     * 
-     * @param name
-     *            Name of the auditorium
+     *
+     * @param name Name of the auditorium
      * @return found auditorium or <code>null</code>
      */
     public @Nullable

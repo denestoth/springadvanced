@@ -2,7 +2,6 @@ package com.epam.spring.advanced.homework.service.settings;
 
 import com.epam.spring.advanced.homework.domain.Event;
 import com.epam.spring.advanced.homework.domain.User;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

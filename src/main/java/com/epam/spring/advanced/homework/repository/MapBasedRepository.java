@@ -12,9 +12,9 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public abstract class MapBasedRepository<TEntity, TKey> implements Repository<TEntity, TKey> {
+    protected final ConcurrentHashMap<TKey, TEntity> entitiesMap = new ConcurrentHashMap<>();
     private final Function<TEntity, TKey> idGetter;
     private final BiConsumer<TEntity, TKey> idSetter;
-    protected final ConcurrentHashMap<TKey, TEntity> entitiesMap = new ConcurrentHashMap<>();
 
     protected MapBasedRepository(
             @Nonnull Function<TEntity, TKey> idGetter, @Nonnull BiConsumer<TEntity, TKey> idSetter

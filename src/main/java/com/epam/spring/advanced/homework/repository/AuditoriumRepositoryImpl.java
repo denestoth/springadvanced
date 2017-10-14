@@ -1,7 +1,6 @@
 package com.epam.spring.advanced.homework.repository;
 
 import com.epam.spring.advanced.homework.domain.Auditorium;
-import org.springframework.stereotype.Repository;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;

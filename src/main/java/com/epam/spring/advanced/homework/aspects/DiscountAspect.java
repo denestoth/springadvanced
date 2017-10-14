@@ -62,7 +62,7 @@ public class DiscountAspect {
             Set<DiscountCounter> discountCounters = discountCounterRepository.find(dc ->
                     dc.getDiscountStrategyId() == discountUserKey.getDiscountStrategy().getId() &&
                             (dc.getUserId() == null && discountUserKey.getUser() == null ||
-                            discountUserKey.getUser() != null && dc.getUserId() == discountUserKey.getUser().getId()));
+                                    discountUserKey.getUser() != null && dc.getUserId() == discountUserKey.getUser().getId()));
 
             if (discountCounters.size() > 1) {
                 throw new IllegalStateException();

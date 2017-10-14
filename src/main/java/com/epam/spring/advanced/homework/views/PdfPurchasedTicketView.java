@@ -25,7 +25,7 @@ public class PdfPurchasedTicketView extends AbstractPdfView {
         table.addCell("Date");
         table.addCell("Seat");
 
-        for (TicketView ticket: tickets) {
+        for (TicketView ticket : tickets) {
             table.addCell(ticket.getEvent());
             table.addCell(ticket.getLocalDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
             table.addCell(Float.toString(ticket.getSeat()));

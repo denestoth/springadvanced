@@ -41,6 +41,6 @@ public interface EventService extends AbstractDomainObjectService<Event> {
     @Nonnull
     Set<Event> getNextEvents(@Nonnull LocalDateTime to);
 
-    void addEvent(@Nonnull  Event event);
+    void addEvent(@Nonnull Event event);
 
 }

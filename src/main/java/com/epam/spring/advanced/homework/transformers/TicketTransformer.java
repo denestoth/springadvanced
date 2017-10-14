@@ -26,7 +26,7 @@ public class TicketTransformer implements Transformer<Ticket, TicketView> {
     @Override
     public TicketView dtoToView(Ticket ticket) {
         String user = ticket.getUser() != null ? ticket.getUser().getFirstName() + " " + ticket.getUser().getLastName() : "";
-        String event = ticket.getEvent() != null ?  ticket.getEvent().getName() : "";
+        String event = ticket.getEvent() != null ? ticket.getEvent().getName() : "";
 
         return new TicketView(ticket.getId(), user, event, ticket.getDateTime(), ticket.getSeat());
     }

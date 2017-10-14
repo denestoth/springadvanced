@@ -35,7 +35,7 @@ public class CounterAspect {
 
     @Before("execution(* com.epam.spring.advanced.homework.service.BookingService.getTicketsPrice(..))")
     public void handleGetTicketsPrice(JoinPoint joinPoint) {
-        Event event = (Event)joinPoint.getArgs()[0];
+        Event event = (Event) joinPoint.getArgs()[0];
         incrementCounterForEvent(event, pricesQueried);
     }
 

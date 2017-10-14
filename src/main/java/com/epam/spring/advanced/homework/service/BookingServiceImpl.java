@@ -2,10 +2,10 @@ package com.epam.spring.advanced.homework.service;
 
 import com.epam.spring.advanced.homework.domain.*;
 import com.epam.spring.advanced.homework.repository.TicketRepository;
-import com.epam.spring.advanced.homework.repository.UserRepository;
 import com.epam.spring.advanced.homework.service.security.AuthenticationFacade;
 import com.epam.spring.advanced.homework.service.settings.BookingSettings;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.time.LocalDateTime;
@@ -84,7 +84,7 @@ public class BookingServiceImpl implements BookingService {
 
         Long sumPrice = 0L;
 
-        for (Ticket ticket: tickets) {
+        for (Ticket ticket : tickets) {
             sumPrice += ticket.getEvent().getTicketPrice();
         }
 

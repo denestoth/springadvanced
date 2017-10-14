@@ -8,8 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.attribute.UserPrincipal;
-
 /**
  * @author Denes Toth
  */
@@ -29,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         if (user != null) {
             return new UserDetailsImpl(user);
-        } else  {
+        } else {
             throw new UsernameNotFoundException("Could not find user: " + s);
         }
     }

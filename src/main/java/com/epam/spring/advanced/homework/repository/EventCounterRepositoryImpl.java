@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class EventCounterRepositoryImpl
         extends MapBasedRepository<EventCounter, Long>
-        implements EventCounterRepository{
+        implements EventCounterRepository {
 
     public EventCounterRepositoryImpl() {
         super(EventCounter::getEventId, EventCounter::setEventId);

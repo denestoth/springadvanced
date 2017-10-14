@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -37,12 +35,12 @@ public class GetPurchasedTicketsController {
     @Autowired
     TicketTransformer ticketTransformer;
 
-    @RequestMapping(value="/api/tickets/purchased", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/tickets/purchased", method = RequestMethod.GET)
     public String getPurchasedTicketsForEvent(@RequestParam("eventId") Long eventId,
-                             @RequestParam("dateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime,
-                             Model model) {
+                                              @RequestParam("dateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime,
+                                              Model model) {
         Event event = eventService.getById(eventId);
-        List<Ticket> tickets =  bookingService.getPurchasedTicketsForEvent(event, dateTime).stream().collect(Collectors.toList());
+        List<Ticket> tickets = bookingService.getPurchasedTicketsForEvent(event, dateTime).stream().collect(Collectors.toList());
         List<TicketView> ticketViews = ticketTransformer.dtosToViews(tickets);
 
         model.addAttribute("tickets", ticketViews);
@@ -50,13 +48,13 @@ public class GetPurchasedTicketsController {
         return "purchasedTickets";
     }
 
-    @RequestMapping(value="/api/tickets/purchasedPdf", method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
+    @RequestMapping(value = "/api/tickets/purchasedPdf", method = RequestMethod.GET, produces = MediaType.APPLICATION_PDF_VALUE)
     public ModelAndView getPurchasedTicketsForEventAsPdf(@RequestParam("eventId") Long eventId,
                                                          @RequestParam("dateTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateTime,
                                                          Model model) {
 
         Event event = eventService.getById(eventId);
-        List<Ticket> tickets =  bookingService.getPurchasedTicketsForEvent(event, dateTime).stream().collect(Collectors.toList());
+        List<Ticket> tickets = bookingService.getPurchasedTicketsForEvent(event, dateTime).stream().collect(Collectors.toList());
         List<TicketView> ticketViews = ticketTransformer.dtosToViews(tickets);
 
         return new ModelAndView("pdfPurchasedTicketView", "tickets", ticketViews);
