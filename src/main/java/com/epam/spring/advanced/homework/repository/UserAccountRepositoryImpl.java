@@ -1,6 +1,7 @@
 package com.epam.spring.advanced.homework.repository;
 
 import com.epam.spring.advanced.homework.domain.UserAccount;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
@@ -9,6 +10,7 @@ import java.util.Collection;
  * @author Denes Toth
  */
 @Repository
+@Qualifier("userAcoountRepository")
 public class UserAccountRepositoryImpl extends MapBasedIdentityRepository<UserAccount> implements UserAccountRepository {
 
     public UserAccountRepositoryImpl() {

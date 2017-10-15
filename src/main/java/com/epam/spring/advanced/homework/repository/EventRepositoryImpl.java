@@ -1,9 +1,13 @@
 package com.epam.spring.advanced.homework.repository;
 
 import com.epam.spring.advanced.homework.domain.Event;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 
+@Repository
+@Qualifier("eventRepository")
 public class EventRepositoryImpl
         extends MapBasedIdentityRepository<Event>
         implements EventRepository {

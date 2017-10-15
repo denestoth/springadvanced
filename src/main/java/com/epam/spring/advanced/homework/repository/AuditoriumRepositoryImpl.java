@@ -1,10 +1,14 @@
 package com.epam.spring.advanced.homework.repository;
 
 import com.epam.spring.advanced.homework.domain.Auditorium;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
 
+@Repository
+@Qualifier("auditoriumRepository")
 public class AuditoriumRepositoryImpl extends MapBasedRepository<Auditorium, String> implements AuditoriumRepository {
     public AuditoriumRepositoryImpl() {
         super(Auditorium::getName, Auditorium::setName);

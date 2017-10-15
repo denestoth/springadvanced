@@ -1,0 +1,1 @@
+INSERT INTO auditorium(id, name) VALUES(0, 'auditorium1');

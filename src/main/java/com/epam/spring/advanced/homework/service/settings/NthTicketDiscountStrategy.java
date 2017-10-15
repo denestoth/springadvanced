@@ -3,6 +3,8 @@ package com.epam.spring.advanced.homework.service.settings;
 import com.epam.spring.advanced.homework.domain.Event;
 import com.epam.spring.advanced.homework.domain.User;
 import com.epam.spring.advanced.homework.repository.TicketRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -13,6 +15,7 @@ public class NthTicketDiscountStrategy extends AbstractDiscountStrategy implemen
 
     private final int n;
     private final float discountPercent;
+    @Autowired
     private final TicketRepository ticketRepository;
 
     public NthTicketDiscountStrategy(

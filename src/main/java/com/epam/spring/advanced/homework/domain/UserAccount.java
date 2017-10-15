@@ -2,6 +2,8 @@ package com.epam.spring.advanced.homework.domain;
 
 import com.epam.spring.advanced.homework.exception.NotEnougnMoneyException;
 
+import javax.persistence.OneToOne;
+
 /**
  * @author Denes Toth
  */
@@ -9,6 +11,9 @@ import com.epam.spring.advanced.homework.exception.NotEnougnMoneyException;
 public class UserAccount extends DomainObject {
 
     private Long prepaidMoneyAmount;
+
+    @OneToOne
+    private User user;
 
     public UserAccount(Long prepaidMoneyAmount) {
         this.prepaidMoneyAmount = prepaidMoneyAmount;

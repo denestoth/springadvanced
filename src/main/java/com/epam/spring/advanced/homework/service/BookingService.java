@@ -1,6 +1,7 @@
 package com.epam.spring.advanced.homework.service;
 
 import com.epam.spring.advanced.homework.domain.Event;
+import com.epam.spring.advanced.homework.domain.Seat;
 import com.epam.spring.advanced.homework.domain.Ticket;
 import com.epam.spring.advanced.homework.domain.User;
 
@@ -8,6 +9,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 public interface BookingService {
@@ -24,7 +26,7 @@ public interface BookingService {
      * @return total price
      */
     public double getTicketsPrice(@Nonnull Event event, @Nonnull LocalDateTime dateTime, @Nullable User user,
-                                  @Nonnull LinkedHashSet<Long> seats);
+                                  @Nonnull List<Seat> seats);
 
     /**
      * Books tickets in internal system. If user is not

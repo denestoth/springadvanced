@@ -3,6 +3,7 @@ package com.epam.spring.advanced.homework.service;
 import com.epam.spring.advanced.homework.domain.User;
 import com.epam.spring.advanced.homework.repository.DomainObjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
@@ -10,11 +11,12 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 
 @Service
+@Qualifier("userService")
 public class UserServiceImpl extends RepositoryBasedDomainObjectService<User> implements UserService {
 
     @Autowired
-    public UserServiceImpl(DomainObjectRepository<User> useRepository) {
-        super(useRepository);
+    public UserServiceImpl(DomainObjectRepository<User> userRepository) {
+        super(userRepository);
     }
 
     @Nullable

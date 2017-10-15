@@ -1,22 +1,23 @@
 package com.epam.spring.advanced.homework.domain;
 
-import java.time.LocalDateTime;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import java.util.Objects;
 
 public class Ticket extends DomainObject implements Comparable<Ticket> {
 
+    @ManyToOne
     private User user;
 
+    @OneToOne
     private Event event;
 
-    private LocalDateTime dateTime;
+    @OneToOne
+    private Seat seat;
 
-    private long seat;
-
-    public Ticket(User user, Event event, LocalDateTime dateTime, long seat) {
+    public Ticket(User user, Event event, Seat seat) {
         this.user = user;
         this.event = event;
-        this.dateTime = dateTime;
         this.seat = seat;
     }
 
@@ -32,17 +33,13 @@ public class Ticket extends DomainObject implements Comparable<Ticket> {
         return event;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public long getSeat() {
+    public Seat getSeat() {
         return seat;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(dateTime, event, seat);
+        return Objects.hash(event, seat);
     }
 
     @Override
@@ -57,13 +54,7 @@ public class Ticket extends DomainObject implements Comparable<Ticket> {
             return false;
         }
         Ticket other = (Ticket) obj;
-        if (dateTime == null) {
-            if (other.dateTime != null) {
-                return false;
-            }
-        } else if (!dateTime.equals(other.dateTime)) {
-            return false;
-        }
+
         if (event == null) {
             if (other.event != null) {
                 return false;
@@ -82,13 +73,10 @@ public class Ticket extends DomainObject implements Comparable<Ticket> {
         if (other == null) {
             return 1;
         }
-        int result = dateTime.compareTo(other.getDateTime());
+        int result = result = event.getName().compareTo(other.getEvent().getName());
 
         if (result == 0) {
-            result = event.getName().compareTo(other.getEvent().getName());
-        }
-        if (result == 0) {
-            result = Long.compare(seat, other.getSeat());
+            result = (seat.equals(other.getSeat()) ? 1 : 0);
         }
         return result;
     }

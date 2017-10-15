@@ -2,7 +2,6 @@ package com.epam.spring.advanced.homework.aspects;
 
 import com.epam.spring.advanced.homework.domain.Event;
 import com.epam.spring.advanced.homework.domain.User;
-import com.epam.spring.advanced.homework.domain.UserLuckyEventInfo;
 import com.epam.spring.advanced.homework.service.UserService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -38,7 +37,6 @@ public class LuckyWinnerAspect {
         Event event = (Event) args[0];
         LocalDateTime airDate = (LocalDateTime) args[1];
 
-        user.addLuckyEvent(new UserLuckyEventInfo(user.getId(), event.getId(), airDate));
         userService.save(user);
 
         return 0.0;

@@ -4,14 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.time.LocalDate;
 import java.util.*;
 
 public class User extends DomainObject {
-
-    @JsonIgnore
-    private final Set<UserLuckyEventInfo> luckyEvents = new HashSet<>();
-    private final Object luckyEventsLocker = new Object();
 
     private String firstName;
 
@@ -23,27 +21,17 @@ public class User extends DomainObject {
 
     private String roles;
 
+    @OneToMany
+    @JsonIgnore
+    private List<Ticket> tickets;
+
+    @OneToOne
     @JsonIgnore
     private UserAccount userAccount;
 
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate birthday;
-
-    @JsonIgnore
-    private NavigableSet<Ticket> tickets = new TreeSet<>();
-
-    public final Set<UserLuckyEventInfo> getLuckyEvents() {
-        synchronized (luckyEventsLocker) {
-            return new HashSet<>(luckyEvents);
-        }
-    }
-
-    public void addLuckyEvent(UserLuckyEventInfo luckyEvent) {
-        synchronized (luckyEventsLocker) {
-            luckyEvents.add(luckyEvent);
-        }
-    }
 
     public String getFirstName() {
         return firstName;
@@ -105,11 +93,11 @@ public class User extends DomainObject {
         this.userAccount = userAccount;
     }
 
-    public NavigableSet<Ticket> getTickets() {
+    public List<Ticket> getTickets() {
         return tickets;
     }
 
-    public void setTickets(NavigableSet<Ticket> tickets) {
+    public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
     }
 

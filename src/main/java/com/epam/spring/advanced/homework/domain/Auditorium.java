@@ -1,38 +1,20 @@
 package com.epam.spring.advanced.homework.domain;
 
-import java.util.Collection;
-import java.util.Collections;
+import javax.persistence.Column;
+import javax.persistence.OneToMany;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.LongStream;
 
-public class Auditorium {
+public class Auditorium extends DomainObject {
 
+    @Column
     private String name;
 
-    private long numberOfSeats;
+    @OneToMany
+    private List<Seat> seats;
 
-    private Set<Long> vipSeats = Collections.emptySet();
-
-    public Auditorium() {
-    }
-
-    public Auditorium(String name, long numberOfSeats, Set<Long> vipSets) {
-        this.name = name;
-        this.numberOfSeats = numberOfSeats;
-        this.vipSeats = vipSets;
-    }
-
-    /**
-     * Counts how many vip seats are there in supplied <code>seats</code>.
-     *
-     * @param seats Seats to process
-     * @return number of vip seats in request
-     */
-    public long countVipSeats(Collection<Long> seats) {
-        return seats.stream().filter(seat -> vipSeats.contains(seat)).count();
-    }
+    @OneToMany
+    private List<Event> events;
 
     public String getName() {
         return name;
@@ -42,28 +24,20 @@ public class Auditorium {
         this.name = name;
     }
 
-    public long getNumberOfSeats() {
-        return numberOfSeats;
+    public List<Seat> getSeats() {
+        return seats;
     }
 
-    public void setNumberOfSeats(long numberOfSeats) {
-        this.numberOfSeats = numberOfSeats;
+    public void setSeats(List<Seat> seats) {
+        this.seats = seats;
     }
 
-    public Set<Long> getAllSeats() {
-        return LongStream.range(1, numberOfSeats + 1).boxed().collect(Collectors.toSet());
+    public List<Event> getEvents() {
+        return events;
     }
 
-    public Set<Long> getVipSeats() {
-        return vipSeats;
-    }
-
-    public void setVipSeats(Set<Long> vipSeats) {
-        this.vipSeats = vipSeats;
-    }
-
-    public boolean isVipSeat(Long seat) {
-        return vipSeats.contains(seat);
+    public void setEvents(List<Event> events) {
+        this.events = events;
     }
 
     @Override

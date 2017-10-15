@@ -1,6 +1,7 @@
 package com.epam.spring.advanced.homework.controllers;
 
 import com.epam.spring.advanced.homework.domain.Event;
+import com.epam.spring.advanced.homework.domain.Seat;
 import com.epam.spring.advanced.homework.domain.User;
 import com.epam.spring.advanced.homework.service.BookingService;
 import com.epam.spring.advanced.homework.service.EventService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Denes Toth
@@ -40,9 +42,10 @@ public class GetTicketsPriceController {
                                   Model model) {
         Event event = eventService.getById(eventId);
         User user = userService.getById(userId);
-        LinkedHashSet<Long> seatsSet = new LinkedHashSet<>(seats);
 
-        double price = bookingService.getTicketsPrice(event, dateTime, user, seatsSet);
+        List<Seat> askedSeats = event.getAuditorium().getSeats().stream().filter(seat -> seats.contains(seat.getNumber())).collect(Collectors.toList());
+
+        double price = bookingService.getTicketsPrice(event, dateTime, user, askedSeats);
 
         model.addAttribute("price", price);
 

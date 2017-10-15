@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class EventServiceImpl extends RepositoryBasedDomainObjectService<Event> implements EventService {
@@ -34,9 +35,8 @@ public class EventServiceImpl extends RepositoryBasedDomainObjectService<Event> 
     public Set<Event> getForDateRange(@Nonnull LocalDate from, @Nonnull LocalDate to) {
         LocalDateTime lowerBound = LocalDateTime.of(from, LocalTime.MIN);
         LocalDateTime upperBound = LocalDateTime.of(to, LocalTime.MAX);
-        return repository.find(event -> !event.getAirDates()
-                .subSet(lowerBound, true, upperBound, true)
-                .isEmpty());
+        return repository.getAll().stream().filter(event -> event.getLocalDateTime().isAfter(lowerBound)
+                && event.getLocalDateTime().isBefore(upperBound)).collect(Collectors.toSet());
     }
 
     @Nonnull
@@ -46,9 +46,8 @@ public class EventServiceImpl extends RepositoryBasedDomainObjectService<Event> 
         if (to.isBefore(lowerBound)) {
             throw new IllegalArgumentException("to");
         }
-        return repository.find(event -> !event.getAirDates()
-                .subSet(lowerBound, true, to, true)
-                .isEmpty());
+        return repository.getAll().stream().filter(event -> event.getLocalDateTime().isAfter(lowerBound)
+                && event.getLocalDateTime().isBefore(to)).collect(Collectors.toSet());
     }
 
     @Override

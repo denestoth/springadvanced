@@ -9,10 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.time.LocalDateTime;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,26 +40,16 @@ public class BookingServiceImpl implements BookingService {
             @Nonnull Event event,
             @Nonnull LocalDateTime dateTime,
             @Nullable User user,
-            @Nonnull LinkedHashSet<Long> seats
+            @Nonnull List<Seat> seats
     ) {
         double sum = 0.0;
         double basePrice = event.getBasePrice();
-        if (event.getRating() == EventRating.HIGH) {
-            basePrice = (100.0 + bookingSettings.getHighRatedExtraChargePercent()) / 100.0 * basePrice;
-        }
-        Map<Long, DiscountService.ApplicableDiscountInfo> discountMap =
-                discountService.getDiscount(user, event, dateTime, seats);
 
-        Auditorium auditorium = event.getAuditoriums().get(dateTime);
-        for (long seat : seats) {
-            double price = auditorium.isVipSeat(seat)
+        Auditorium auditorium = event.getAuditorium();
+        for (Seat seat : seats) {
+            double price = seat.isVip()
                     ? (100.0 + bookingSettings.getVipExtraChargePercent()) / 100.0 * basePrice
                     : basePrice;
-
-            DiscountService.ApplicableDiscountInfo discount = discountMap.get(seat);
-            if (discount != null) {
-                price = (100.0 - discount.getDiscountPercent()) / 100.0 * price;
-            }
 
             sum += price;
         }
@@ -73,9 +60,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public void bookTickets(@Nonnull Set<Ticket> tickets) {
         Set<Ticket> incorrectTickets = tickets.stream()
-                // for simplicity let's not do all the possible checks against the tickets
-                .filter(ticket -> !ticket.getEvent().getAirDates().contains(ticket.getDateTime()) ||
-                        ticket.getSeat() > ticket.getEvent().getAuditoriums().get(ticket.getDateTime()).getNumberOfSeats())
+                .filter(ticket -> ticket.getUser() != null)
                 .collect(Collectors.toSet());
 
         if (!incorrectTickets.isEmpty()) {
@@ -95,7 +80,7 @@ public class BookingServiceImpl implements BookingService {
                     .find(t -> tickets.stream()
                             .anyMatch(ticket -> Objects.equals(t.getEvent(), ticket.getEvent()) &&
                                     Objects.equals(t.getSeat(), ticket.getSeat()) &&
-                                    Objects.equals(t.getDateTime(), ticket.getDateTime()) &&
+                                    Objects.equals(t.getEvent().getLocalDateTime(), ticket.getEvent().getLocalDateTime()) &&
                                     t.getUser() != null));
 
             if (!alreadyBookedTickets.isEmpty()) {
@@ -118,7 +103,7 @@ public class BookingServiceImpl implements BookingService {
     @Nonnull
     @Override
     public Set<Ticket> getPurchasedTicketsForEvent(@Nonnull Event event, @Nonnull LocalDateTime dateTime) {
-        return ticketRepository.find(t -> event.equals(t.getEvent()) && dateTime.equals(t.getDateTime()) && t.getUser() != null);
+        return ticketRepository.find(t -> event.equals(t.getEvent()) && dateTime.equals(t.getEvent().getLocalDateTime()) && t.getUser() != null);
     }
 
 }
