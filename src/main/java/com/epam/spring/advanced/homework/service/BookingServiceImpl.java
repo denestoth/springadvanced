@@ -5,7 +5,11 @@ import com.epam.spring.advanced.homework.repository.TicketRepository;
 import com.epam.spring.advanced.homework.service.security.AuthenticationFacade;
 import com.epam.spring.advanced.homework.service.settings.BookingSettings;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.AbstractPlatformTransactionManager;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,19 +29,22 @@ public class BookingServiceImpl implements BookingService {
     private final AuthenticationFacade authenticationFacade;
     private final UserService userService;
     private final Object bookingLocker = new Object();
+    private final AbstractPlatformTransactionManager transactionManager;
 
     public BookingServiceImpl(
             BookingSettings bookingSettings,
             TicketRepository ticketRepository,
             UserService userService,
             DiscountService discountService,
-            AuthenticationFacade authenticationFacade
+            AuthenticationFacade authenticationFacade,
+            AbstractPlatformTransactionManager transactionManager
     ) {
         this.bookingSettings = bookingSettings;
         this.ticketRepository = ticketRepository;
         this.discountService = discountService;
         this.authenticationFacade = authenticationFacade;
         this.userService = userService;
+        this.transactionManager = transactionManager;
     }
 
     @Override
@@ -73,48 +80,96 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    @Transactional
     public void bookTickets(@Nonnull Set<Ticket> tickets) {
-        Set<Ticket> incorrectTickets = tickets.stream()
-                // for simplicity let's not do all the possible checks against the tickets
-                .filter(ticket -> !ticket.getEvent().getAirDates().contains(ticket.getDateTime()) ||
-                        ticket.getSeat() > ticket.getEvent().getAuditoriums().get(ticket.getDateTime()).getNumberOfSeats())
-                .collect(Collectors.toSet());
 
-        if (!incorrectTickets.isEmpty()) {
-            throw new IllegalArgumentException(String.format("Incorrect tickets: %s", incorrectTickets));
+        DefaultTransactionDefinition defaultTransactionDefinition = new DefaultTransactionDefinition();
+        defaultTransactionDefinition.setName("myTxDef");
+        defaultTransactionDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+        defaultTransactionDefinition.setIsolationLevel(TransactionDefinition.ISOLATION_REPEATABLE_READ);
+
+        TransactionStatus status = transactionManager.getTransaction(defaultTransactionDefinition);
+
+        try {
+            Set<Ticket> incorrectTickets = filterIncorrectTickets(tickets);
+
+            checkIncorrectTickets(incorrectTickets);
+
+            Long fullPrice = computeFullPrice(tickets);
+
+            payPrice(fullPrice);
+
+            synchronized (bookingLocker) {
+                Set<Ticket> alreadyBookedTickets = getAlreadyBookedTickets(tickets);
+
+                checkAlreadyBookedTickets(alreadyBookedTickets);
+
+                for (Ticket ticket : tickets) {
+                    User user = getLoggedInUser();
+                    if (user != null) {
+                        user.getTickets().add(ticket);
+                        if (user.getId() != null) {
+                            userService.update(user);
+                        }
+                        ticket.setUser(user);
+                    }
+                }
+            }
+        } catch (Exception x) {
+            transactionManager.rollback(status);
+            throw x;
         }
 
+        transactionManager.commit(status);
+    }
+
+    private void checkAlreadyBookedTickets(Set<Ticket> alreadyBookedTickets) {
+        if (!alreadyBookedTickets.isEmpty()) {
+            throw new RuntimeException(String.format("Tickets already booked: %s", alreadyBookedTickets));
+        }
+    }
+
+    private Set<Ticket> getAlreadyBookedTickets(@Nonnull Set<Ticket> tickets) {
+        return ticketRepository
+                .find(t -> tickets.stream()
+                        .anyMatch(ticket -> Objects.equals(t.getEvent(), ticket.getEvent()) &&
+                                Objects.equals(t.getSeat(), ticket.getSeat()) &&
+                                Objects.equals(t.getDateTime(), ticket.getDateTime()) &&
+                                t.getUser() != null));
+    }
+
+    private Long payPrice(Long fullPrice) {
+        return getLoggedInUser().getUserAccount().substractMoney(fullPrice);
+    }
+
+    private User getLoggedInUser() {
+        return userService.getUserByEmail(getLoggedInUserEmailAddress());
+    }
+
+    private String getLoggedInUserEmailAddress() {
+        return authenticationFacade.getAuthentication().getName();
+    }
+
+    private Long computeFullPrice(@Nonnull Set<Ticket> tickets) {
         Long sumPrice = 0L;
 
         for (Ticket ticket : tickets) {
             sumPrice += ticket.getEvent().getTicketPrice();
         }
+        return sumPrice;
+    }
 
-        userService.getUserByEmail(authenticationFacade.getAuthentication().getName()).getUserAccount().substractMoney(sumPrice);
-
-        synchronized (bookingLocker) {
-            Set<Ticket> alreadyBookedTickets = ticketRepository
-                    .find(t -> tickets.stream()
-                            .anyMatch(ticket -> Objects.equals(t.getEvent(), ticket.getEvent()) &&
-                                    Objects.equals(t.getSeat(), ticket.getSeat()) &&
-                                    Objects.equals(t.getDateTime(), ticket.getDateTime()) &&
-                                    t.getUser() != null));
-
-            if (!alreadyBookedTickets.isEmpty()) {
-                throw new RuntimeException(String.format("Tickets already booked: %s", alreadyBookedTickets));
-            }
-
-            for (Ticket ticket : tickets) {
-                User user = userService.getAll().stream().collect(Collectors.toList()).get(0);
-                if (user != null) {
-                    user.getTickets().add(ticket);
-                    if (user.getId() != null) {
-                        userService.update(user);
-                    }
-                    ticket.setUser(user);
-                }
-            }
+    private void checkIncorrectTickets(Set<Ticket> incorrectTickets) {
+        if (!incorrectTickets.isEmpty()) {
+            throw new IllegalArgumentException(String.format("Incorrect tickets: %s", incorrectTickets));
         }
+    }
+
+    private Set<Ticket> filterIncorrectTickets(@Nonnull Set<Ticket> tickets) {
+        return tickets.stream()
+                .filter(ticket -> !ticket.getEvent().getAirDates().contains(ticket.getDateTime()) ||
+                        ticket.getSeat() > ticket.getEvent().getAuditoriums().get(ticket.getDateTime()).getNumberOfSeats())
+                .collect(Collectors.toSet());
     }
 
     @Nonnull
