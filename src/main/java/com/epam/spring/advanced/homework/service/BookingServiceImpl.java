@@ -5,6 +5,7 @@ import com.epam.spring.advanced.homework.repository.TicketRepository;
 import com.epam.spring.advanced.homework.service.security.AuthenticationFacade;
 import com.epam.spring.advanced.homework.service.settings.BookingSettings;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -16,6 +17,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class BookingServiceImpl implements BookingService {
     private final BookingSettings bookingSettings;
     private final TicketRepository ticketRepository;
