@@ -53,8 +53,7 @@ public class BookingServiceImpl implements BookingService {
             @Nonnull Event event,
             @Nonnull LocalDateTime dateTime,
             @Nullable User user,
-            @Nonnull LinkedHashSet<Long> seats
-    ) {
+            @Nonnull LinkedHashSet<Long> seats) {
         double sum = 0.0;
         double basePrice = event.getBasePrice();
         if (event.getRating() == EventRating.HIGH) {
