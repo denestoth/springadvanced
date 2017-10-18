@@ -4,13 +4,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 import java.time.LocalDate;
 import java.util.*;
 
+@XmlRootElement
+@XmlType(propOrder = {"firstName", "lastName", "email"})
 public class User extends DomainObject {
 
     @JsonIgnore
     private final Set<UserLuckyEventInfo> luckyEvents = new HashSet<>();
+
+    @JsonIgnore
     private final Object luckyEventsLocker = new Object();
 
     private String firstName;
@@ -49,6 +57,7 @@ public class User extends DomainObject {
         return firstName;
     }
 
+    @XmlAttribute(name = "firstName")
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -57,6 +66,7 @@ public class User extends DomainObject {
         return lastName;
     }
 
+    @XmlAttribute(name = "lastName")
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -65,6 +75,7 @@ public class User extends DomainObject {
         return email;
     }
 
+    @XmlAttribute(name = "email")
     public void setEmail(String email) {
         this.email = email;
     }
@@ -77,6 +88,7 @@ public class User extends DomainObject {
     //Why the following DateFormats do not work? had to fall back to SpEL...
     //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     //@DateTimeFormat(pattern = "yyyy-MM-dd")
+    @XmlTransient
     public void setBirthday(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate birthday) {
         this.birthday = birthday;
     }
@@ -85,6 +97,7 @@ public class User extends DomainObject {
         return password;
     }
 
+    @XmlTransient
     public void setPassword(String password) {
         this.password = password;
     }
@@ -93,6 +106,7 @@ public class User extends DomainObject {
         return roles;
     }
 
+    @XmlTransient
     public void setRoles(String roles) {
         this.roles = roles;
     }
@@ -101,6 +115,7 @@ public class User extends DomainObject {
         return userAccount;
     }
 
+    @XmlTransient
     public void setUserAccount(UserAccount userAccount) {
         this.userAccount = userAccount;
     }
@@ -109,6 +124,7 @@ public class User extends DomainObject {
         return tickets;
     }
 
+    @XmlTransient
     public void setTickets(NavigableSet<Ticket> tickets) {
         this.tickets = tickets;
     }

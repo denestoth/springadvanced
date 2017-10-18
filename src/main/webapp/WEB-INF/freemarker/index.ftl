@@ -11,7 +11,7 @@
             <a href="<@spring.url '/api/tickets/purchased?eventId=1000&dateTime=2018-07-15T22:30Z'/>">see sold tickets</a>
         </p>
         <p>
-            <a href="<@spring.url 'api/tickets/purchasedPdf?eventId=1000&dateTime=2018-07-15T22:30Z'/>">see sold tickets as PDF</a>
+            <a href="<@spring.url '/api/tickets/purchasedPdf?eventId=1000&dateTime=2018-07-15T22:30Z'/>">see sold tickets as PDF</a>
         </p>
         <p>
             <a href="<@spring.url '/api/user/upload'/>">Upload users</a>

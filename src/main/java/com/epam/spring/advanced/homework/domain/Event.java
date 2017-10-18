@@ -3,10 +3,20 @@ package com.epam.spring.advanced.homework.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.NavigableMap;
+import java.util.NavigableSet;
+import java.util.Objects;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
+@XmlRootElement(name = "event")
+@XmlType(propOrder = {"name", "basePrice", "ticketPrice"})
 public class Event extends DomainObject {
 
     private String name;
@@ -21,6 +31,51 @@ public class Event extends DomainObject {
 
     @JsonIgnore
     private long ticketPrice;
+
+    public String getName() {
+        return name;
+    }
+
+    @XmlAttribute(name = "name")
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getBasePrice() {
+        return basePrice;
+    }
+
+    @XmlAttribute(name = "basePrice")
+    public void setBasePrice(double basePrice) {
+        this.basePrice = basePrice;
+    }
+
+    public EventRating getRating() {
+        return rating;
+    }
+
+    @XmlTransient
+    public void setRating(EventRating rating) {
+        this.rating = rating;
+    }
+
+    public NavigableMap<LocalDateTime, Auditorium> getAuditoriums() {
+        return auditoriums;
+    }
+
+    @XmlTransient
+    public void setAuditoriums(NavigableMap<LocalDateTime, Auditorium> auditoriums) {
+        this.auditoriums = auditoriums;
+    }
+
+    public long getTicketPrice() {
+        return ticketPrice;
+    }
+
+    @XmlAttribute(name = "ticketPrice")
+    public void setTicketPrice(long ticketPrice) {
+        this.ticketPrice = ticketPrice;
+    }
 
     /**
      * Checks if event is aired on particular <code>dateTime</code> and assigns
@@ -112,48 +167,8 @@ public class Event extends DomainObject {
         return getAirDates().stream().anyMatch(dt -> dt.toLocalDate().compareTo(from) >= 0 && dt.toLocalDate().compareTo(to) <= 0);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public NavigableSet<LocalDateTime> getAirDates() {
         return new TreeSet<>(auditoriums.keySet());
-    }
-
-    public double getBasePrice() {
-        return basePrice;
-    }
-
-    public void setBasePrice(double basePrice) {
-        this.basePrice = basePrice;
-    }
-
-    public EventRating getRating() {
-        return rating;
-    }
-
-    public void setRating(EventRating rating) {
-        this.rating = rating;
-    }
-
-    public NavigableMap<LocalDateTime, Auditorium> getAuditoriums() {
-        return auditoriums;
-    }
-
-    public void setAuditoriums(NavigableMap<LocalDateTime, Auditorium> auditoriums) {
-        this.auditoriums = auditoriums;
-    }
-
-    public long getTicketPrice() {
-        return ticketPrice;
-    }
-
-    public void setTicketPrice(long ticketPrice) {
-        this.ticketPrice = ticketPrice;
     }
 
     @Override
