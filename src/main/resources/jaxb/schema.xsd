@@ -1,35 +1,70 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://spring.io/guides/gs-producing-web-service"
+           targetNamespace="http://spring.io/guides/gs-producing-web-service"
+           version="1.0">
 
-  <xs:element name="event" type="event"/>
+    <xs:element name="getEventRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
-  <xs:element name="user" type="user"/>
+    <xs:element name="getEventResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="event" type=""/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
-  <xs:complexType name="event">
-    <xs:complexContent>
-      <xs:extension base="domainObject">
-        <xs:sequence/>
-        <xs:attribute name="name" type="xs:string"/>
-        <xs:attribute name="basePrice" type="xs:double" use="required"/>
-        <xs:attribute name="ticketPrice" type="xs:long" use="required"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
+    <xs:element name="getUserRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="email" type="xs:string" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
-  <xs:complexType name="domainObject">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="id" type="xs:long"/>
-    </xs:sequence>
-  </xs:complexType>
+    <xs:element name="getUserResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="user" type="user" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
-  <xs:complexType name="user">
-    <xs:complexContent>
-      <xs:extension base="domainObject">
-        <xs:sequence/>
-        <xs:attribute name="firstName" type="xs:string"/>
-        <xs:attribute name="lastName" type="xs:string"/>
-        <xs:attribute name="email" type="xs:string"/>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
+    <xs:element name="event" type="event"/>
+
+    <xs:element name="user" type="user"/>
+
+    <xs:complexType name="event">
+        <xs:complexContent>
+            <xs:extension base="domainObject">
+                <xs:sequence/>
+                <xs:attribute name="name" type="xs:string"/>
+                <xs:attribute name="basePrice" type="xs:double" use="required"/>
+                <xs:attribute name="ticketPrice" type="xs:long" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="domainObject">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="id" type="xs:long"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="user">
+        <xs:complexContent>
+            <xs:extension base="domainObject">
+                <xs:sequence/>
+                <xs:attribute name="firstName" type="xs:string"/>
+                <xs:attribute name="lastName" type="xs:string"/>
+                <xs:attribute name="email" type="xs:string"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
 </xs:schema>
