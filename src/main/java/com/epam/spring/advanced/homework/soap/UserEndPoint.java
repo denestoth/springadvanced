@@ -2,6 +2,7 @@ package com.epam.spring.advanced.homework.soap;
 
 import com.epam.spring.advanced.homework.domain.User;
 import com.epam.spring.advanced.homework.repository.UserRepository;
+import com.epam.spring.advanced.homework.service.UserService;
 import generated.GetUserRequest;
 import generated.GetUserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +19,14 @@ import java.util.stream.Collectors;
 @Endpoint
 public class UserEndPoint {
 
-    private static final String NAMESPACE_URI = "http://localhost:8080/denes-toth/";
+    public static final String NAMESPACE_URI = "http://something.com/ws/";
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getUserRequest")
     public GetUserResponse getUserByEmail(@RequestPayload GetUserRequest request) {
-        String email = request.getEmail();
-        List<User> users = userRepository.getAll().stream().filter(user -> user.getEmail().equals(email)).collect(Collectors.toList());
-        User user = users.isEmpty() ? null : users.get(0);
+        User user = userService.getUserByEmail(request.getEmail());
 
         generated.User responseUser = new generated.User();
 
