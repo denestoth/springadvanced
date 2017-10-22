@@ -120,6 +120,7 @@ public class Event extends DomainObject {
         this.name = name;
     }
 
+
     public NavigableSet<LocalDateTime> getAirDates() {
         return new TreeSet<>(auditoriums.keySet());
     }
